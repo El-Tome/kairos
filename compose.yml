@@ -3,10 +3,10 @@ services:
     image: mariadb:11.6
     container_name: symfony_db
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: symfony
-      MYSQL_USER: symfony
-      MYSQL_PASSWORD: symfony
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - '3306:3306'
     volumes:
@@ -17,10 +17,8 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     container_name: symfony_php
-    # Pour pouvoir utiliser Composer, par exemple
     volumes:
       - ./app:/var/www/app
-    # Lien avec la BDD
     depends_on:
       - db
 

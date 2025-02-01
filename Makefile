@@ -10,3 +10,6 @@ bash:
 build:
 	docker-compose up -d && \
 	docker exec symfony_php composer install
+
+cc:
+	docker exec symfony_php php bin/console cache:clear
