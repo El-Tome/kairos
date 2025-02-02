@@ -7,3 +7,13 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+
+const isBackoffice = window.location.pathname.startsWith('/admin');
+
+if (isBackoffice) {
+    import('./backoffice/standalone');
+    import('./backoffice/app.tsx');
+} else {
+    import('./frontoffice/standalone');
+    import('./frontoffice/app.tsx');
+}
