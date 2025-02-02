@@ -10,7 +10,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - db_data:/var/lib/mysql
+      - db:/var/lib/mysql
 
   php:
     build:
@@ -19,6 +19,10 @@ services:
     container_name: symfony_php
     volumes:
       - ./app:/var/www/app
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - db
 
@@ -33,5 +37,17 @@ services:
     depends_on:
       - php
 
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=${MYSQL_USER}
+      - PMA_PASSWORD=${MYSQL_PASSWORD}
+      - UPLOAD_LIMIT=128M
+
 volumes:
-  db_data:
+  db:
