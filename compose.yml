@@ -1,7 +1,7 @@
 services:
   db:
     image: mariadb:11.6
-    container_name: symfony_db
+    container_name: symfony_db_kairos
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: symfony_php
+    container_name: symfony_php_kairos
     volumes:
       - ./app:/var/www/app
     environment:
@@ -28,7 +28,7 @@ services:
 
   nginx:
     image: nginx:stable-alpine
-    container_name: symfony_nginx
+    container_name: symfony_nginx_kairos
     ports:
       - '8080:80'
     volumes:
@@ -38,7 +38,7 @@ services:
       - php
 
   phpmyadmin:
-    container_name: phpmyadmin
+    container_name: phpmyadmin_kairos
     image: phpmyadmin/phpmyadmin
     ports:
       - "8082:80"

@@ -1,15 +1,15 @@
 start:
-	docker-compose up -d
+	docker compose up -d
 
 stop:
-	docker-compose down
+	docker compose down
 
 bash:
 	docker exec -ti symfony_php bash
 
 build:
-	docker-compose up -d && \
-	docker exec symfony_php composer install
+	docker compose up -d && \
+	docker exec symfony_php_kairos composer install
 
 cc:
 	docker exec symfony_php php bin/console cache:clear
