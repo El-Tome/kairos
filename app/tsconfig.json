@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "es6",
+    "module": "es2020",
     "jsx": "react",
     "moduleResolution": "node",
     "strict": true,
@@ -9,7 +9,11 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./assets/types"
+    ]
   },
   "include": [
     "assets/**/*"
