@@ -5,6 +5,10 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
+imports:
+    - { resource: admin_config.yaml }
+
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -22,3 +26,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\EventListener\AdminSetupListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface:
+        alias: cache_clearer
+

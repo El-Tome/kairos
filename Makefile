@@ -1,7 +1,5 @@
 start:
-	docker compose up -d && \
-	cd app/ && \
-	npm run build
+	docker compose up -d
 
 startDev:
 	docker compose up -d && \
