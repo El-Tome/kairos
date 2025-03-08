@@ -13,7 +13,7 @@ class AdminConfigType extends AbstractType
     {
         $builder
             ->add('admin_path', TextType::class, [
-                'label' => 'Chemin d’accès à l’admin',
+                'label' => 'Path to the admin panel',
             ]);
     }
 

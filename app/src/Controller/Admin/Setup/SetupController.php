@@ -17,8 +17,8 @@ use Symfony\Component\Yaml\Yaml;
 
 final class SetupController extends AbstractController
 {
-    #[Route('/setup', name: 'admin_setup')]
-    public function index(
+    #[Route('/setup/admin_account', name: 'admin_setup_account')]
+    public function setupAdminAccount(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface      $entityManager
@@ -42,16 +42,22 @@ final class SetupController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_config');
+            return $this->redirectToRoute('admin_setup');
         }
 
-        return $this->render('admin/setup/setup/index.html.twig', [
+        return $this->render('admin/setup/adminAccount.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
 
-    #[Route('/config', name: 'admin_config')]
-    public function config(
+    #[Route('/setup', name: 'admin_setup')]
+    public function setupPanel(): Response
+    {
+        return $this->render('admin/setup/panel.html.twig');
+    }
+
+    #[Route('/setup/admin_path', name: 'admin_setup_path')]
+    public function setupPath(
         Request               $request,
         CacheClearerInterface $cacheClearer
     ): Response | RedirectResponse
@@ -76,18 +82,24 @@ final class SetupController extends AbstractController
             file_put_contents($configFile, $yamlContent);
 
             $cacheClearer->clear($this->getParameter('kernel.cache_dir'));
-            $this->addFlash('success', 'Configuration mise à jour et cache vidé.');
+            $this->addFlash('success', 'Configuration update and cache clear.');
 
             // Generate the path with the new URL
             $newPrefix = $data['admin_path'];
             $host      = $request->getSchemeAndHttpHost();
-            $newUrl    = $host . $newPrefix . '/config';
+            $newUrl    = $host . $newPrefix . '/setup';
 
             return new RedirectResponse($newUrl);
         }
 
-        return $this->render('admin/config.html.twig', [
+        return $this->render('admin/setup/setupPath.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/setup/lang', name: 'admin_config_lang')]
+    public function setupLang()
+    {
+
     }
 }

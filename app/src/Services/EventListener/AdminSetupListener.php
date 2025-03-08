@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface;
 
-class AdminSetupListener
+final class AdminSetupListener
 {
     private EntityManagerInterface $em;
     private RouterInterface        $router;
@@ -36,7 +36,7 @@ class AdminSetupListener
         if (
             in_array(
                 $request->attributes->get('_route'),
-                ['admin_setup' , '_wdt', '_profiler', '_error']
+                ['admin_setup_account' , '_wdt', '_profiler', '_error']
             )
         ) {
             return;
@@ -46,7 +46,7 @@ class AdminSetupListener
         $admin = $this->em->getRepository(User::class)->findOneByRole('ROLE_ADMIN');
         if (!$admin) {
             // If no admin exists, redirect to the setup page
-            $response = new RedirectResponse($this->router->generate('admin_setup'));
+            $response = new RedirectResponse($this->router->generate('admin_setup_account'));
             $event->setResponse($response);
         }
     }
